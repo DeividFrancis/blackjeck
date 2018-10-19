@@ -1,10 +1,3 @@
-"""
-Espada        = ♠️; 
-Ouro          = ♦️;
-Paus          = ♣️;
-Copas         = ♥️;
-"""
-
 import os
 import random
 
@@ -121,6 +114,5 @@ def game():
 		elif choice == "q":
 			print("Bye!")
 			exit()
-	
 if __name__ == "__main__":
-   game()
+	game()
