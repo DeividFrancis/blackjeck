@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans+Caption');
+
+html {
+  margin: 0;
+  padding: 0;
+}
+ul{
+  list-style: none;
+}
+body{
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100%;
+  background-color: #3a811a;
+}
+.action-list{
+  display: flex;
+  position: absolute;
+  bottom: 0;
+}
+.table {
+  display: flex;
+  justify-content: center;
+}
+.table .bet{
+  background-color: grey;
+  position: absolute;
+  top: 0;
+  align-self: center;
+}
+.table .bet-modal{
+  background-color: grey;
+
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  }
+.table .bet-modal .chips{
+  width: 30%;
+
+  display: flex;
+  justify-content: space-around;
+}
+.table .bet-modal .painel{
+  background-color: green;
+
+}
+
+
+.table .side{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  height: 100vh;
+  width: 100%;
+}
+.table .side .hand{
+  min-width: 50%;
+  min-height: 50%;
+  /*background-color: #555;*/
+
+  display: flex;
+  flex-wrap: wrap;
+}
+.table .side .hand .card{
+  width: 8em;
+  margin-right: -5em;
+  margin-left: .8em;
+}
+.table .side .hand .card:nth-child(0+1){
+  margin: 1em;
+}
+.table .side .hand .card img{
+  width: 100%;
+}
+
+.player-side .hand{
+  align-self: flex-end;
+}
+.player-side .wallet{
+  background-color: grey;
+
+  position: absolute;
+  top: 0;
+}
+
+.player-side .wallet img{
+  width: 5%;
+}
+
+.player-side .wallet span{
+  padding-bottom: 16px;
+  font-size: 1.8em;
+  font-family: 'PT Sans Caption', sans-serif;
+}
+
+.dealer-side{
+  /*background: red;*/
+}
+.dealer-side .hand{
+
+}
+.dealer-side .deck{
+  background-color: grey;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.player-side{
+  /*background: blue;*/
+  border-right: 3px brown;
+  border-right-style: outset;
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="master.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+</head>
+<body>
+  <div class="table">
+    <div class="bet">
+      <span>RS</span>
+      <span>2000</span>
+    </div>
+    <div class="action-list">
+      <button id="hit" class="action" type="button" name="button">hit</button>
+      <button id="stand" class="action" type="button" name="button">stand</button>
+      <button id="double-down" class="action" type="button" name="button">double down</button>
+      <button id="surrender" class="action" type="button" name="button">surrender</button>
+    </div>
+    <div class="player-side side">
+      <div class="wallet">
+        <img src="/img/coins.png" alt="">
+        <span class="coin">R$</span>
+        <span id="#wallet">5,000</span>
+      </div>
+
+      <div class="hand">
+        player-hand
+      </div>
+    </div>
+
+    <div class="dealer-side side">
+      <div class="deck">
+        deck
+      </div>
+      <div class="hand">
+        <div class="card">
+          <img src="/img/cards/4D.png" alt="">
+        </div>
+        <div class="card">
+          <img src="/img/cards/2C.png" alt="">
+        </div>
+        <div class="card">
+          <img src="/img/cards/8H.png" alt="">
+        </div>
+        <div class="card">
+          <img src="/img/cards/8H.png" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="bet-modal">
+      <div class="painel">
+        <span>RS</span>
+        <span id="bet-value">1000</span>
+      </div>
+      <ul class="chips">
+        <li class="chip">
+          <button type="button" name="chip-value">
+            <span id="value">1</span>
+          </button>
+        </li>
+        <li class="chip">
+          <button type="button" name="chip-value">
+            <span id="value">10</span>
+          </button>
+        </li>
+        <li class="chip">
+          <button type="button" name="chip-value">
+            <span id="value">100</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
