@@ -22,8 +22,10 @@ def stend():
     return 'stend'
 
 if __name__ == '__main__':
-    app.runn()
+    app.run(debug=True, host='0.0.0.0')
 
-# $ env FLASK_APP=route.py flask run
+# $ export FLASK_APP=route.py
+# $ export FLASK_DEBUG=1
+# $ python -m flask run
 #  * Serving Flask app "hello"
 #  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
