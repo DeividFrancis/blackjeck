@@ -1,18 +1,32 @@
 version: "3"
 services:
-  api:
-    build:
-      dockerfile: ./flask.dockerfile
-      context: .
-    volumes:
-      - ./api:/home/blackjeck
-    ports:
-      - "5000:5000"
   app:
     build:
       dockerfile: ./app.dockerfile
       context: .
+    container_name: app
     volumes:
       - ./app:/app
     ports:
       - "3000:3000"
+    links:
+      - api
+    depends_on:
+      - api
+    # networks: 
+    #   - backend
+
+    # network_mode: bridge
+    # external_links:
+    #   - api:api
+  api:
+    build:
+      dockerfile: ./flask.dockerfile
+      context: .
+    container_name: api
+    volumes:
+      - ./api:/home/blackjeck
+    ports:
+      - "5000:5000"
+# networks: 
+#   backend:
