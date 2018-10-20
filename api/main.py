@@ -1,4 +1,4 @@
-from blackjack import Blackjack
+from classe.blackjack import Blackjack
 
 if __name__ == "__main__":
     bj = Blackjack()

@@ -1,4 +1,4 @@
-var api = "172.23.0.2:5000";
+var api = "172.18.0.2:5000";
 var url = "//" + api;
 
 $(document).ready(() => {

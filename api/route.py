@@ -1,28 +1,62 @@
-from flask import Flask
+# Natives
+import json
+from datetime import datetime
+
+# Libs
+from flask import Flask, request
+from flask_json import FlaskJSON, JsonError, json_response, as_json
 from flask_cors import CORS
+
+# Mys
+from classe.blackjack import Blackjack, Deck
 
 app = Flask(__name__)
 CORS(app)
+FlaskJSON(app)
+
+app.config['JSON_ADD_STATUS'] = True
+
+
+# Game
+game = Blackjack()
+hand = []
+session_bet = 0
 
 @app.route('/')
 def index():
-    return '<h1>Hello Blackjeck</h1>'
+    now = datetime.utcnow()
+    return json_response(time=now)
 
-@app.route('/start')
+@app.route('/deck')
+@as_json
 def start():
-    return 'Start'
+    deck = Deck()
+    return deck.get_deck()
 
-@app.route('/bet/<int:coin>')
+@app.route('/bet/<coin>')
+@as_json
 def bet(coin):
-    return "ddd %d"%coin
+    session_bet = coin
+    res = {"message": "Aposta de RS: " + coin + " feita"}
+    return res
 
-@app.route('/hit/<int:card>')
-def hit(card):
-    return "ddd %d"%card
+@app.route('/deal')
+@as_json
+def deal():
+    hand = game.deal()
+    return hand
 
-@app.route('/stend')
-def stend():
-    return 'stend'
+@app.route('/hit')
+@as_json
+def hit():
+    return game.hit(hand)
+
+@app.route('/blackjack/<int:dealer>/<int:player>')
+@as_json
+def blackjack(dealer,player):
+    msg = game.blackjack(dealer,player)
+    res = {}
+    return res
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
