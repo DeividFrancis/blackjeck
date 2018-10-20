@@ -44,7 +44,7 @@ body{
   display: none;
   flex-direction: column;
   align-self: center;
-  }
+}
 .table .bet-modal .chips{
   width: 30%;
   display: flex;
@@ -77,8 +77,8 @@ button{
 }
 
 button:hover{
-    background-color: #fff;
-    color: #111;
+  background-color: #fff;
+  color: #111;
 }
 
 .table .side{
@@ -106,16 +106,18 @@ button:hover{
 }
 .table .side .hand .card img{
   width: 100%;
+  border-radius: 15px;
+  box-shadow: -2px 1px #555;
 }
 
 .player-side .hand{
   align-self: flex-end;
 }
-.player-side .wallet{
-  background-color: grey;
 
+.player-side .wallet{
   position: absolute;
   top: 0;
+  color: #fff;
 }
 
 .table .action-list button{
@@ -123,6 +125,28 @@ button:hover{
   font-size: .9em;
   margin: .5em;
   width: 8em;
+}
+
+.player-side .wallet{
+  margin: 1em;
+  width: 10%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.wallet span{
+
+}
+
+.wallet span#coins-added{
+  position: absolute;
+  top: 1.5em;
+  left: 2.5em;
+  color: rgb(92, 255, 23);
+}
+
+.player-side .wallet img{
+  width: 100%;
 }
 
 .player-side .wallet span{
@@ -150,7 +174,7 @@ button:hover{
 }
 
 .player-side{
-  /*border-right: 3px #fff outset;*/
+
 }
 
 .score{
