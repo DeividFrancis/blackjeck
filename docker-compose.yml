@@ -13,12 +13,6 @@ services:
       - api
     depends_on:
       - api
-    # networks: 
-    #   - backend
-
-    # network_mode: bridge
-    # external_links:
-    #   - api:api
   api:
     build:
       dockerfile: ./flask.dockerfile
@@ -26,7 +20,3 @@ services:
     container_name: api
     volumes:
       - ./api:/home/blackjeck
-    ports:
-      - "5000:5000"
-# networks: 
-#   backend:

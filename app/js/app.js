@@ -1,8 +1,11 @@
+var api = "172.23.0.2:5000";
+var url = "//" + api;
+
 $(document).ready(() => {
     console.log("Hello");
 
     $.ajax({
-        url: 'api',
+        url: url,
         method: 'GET',
         success: (data) => {
             console.log(data);
