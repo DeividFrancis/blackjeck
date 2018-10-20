@@ -39,15 +39,34 @@ body{
   }
 .table .bet-modal .chips{
   width: 30%;
-
   display: flex;
-  justify-content: space-around;
+  align-content: space-around;
 }
+
+.table .bet-modal .chips button{
+  margin: 0.3em;
+  border-radius: 1000px !important;
+  border: none;
+  width: 4em;
+  height: 4em;
+}
+
 .table .bet-modal .painel{
   background-color: green;
 
 }
+.table .bet-modal .bet-deal{
+  display: flex;
+  align-self: center;
+}
 
+button{
+  padding: .5em;
+  cursor: pointer;
+  text-transform: capitalize;
+  background-color: #111;
+  color: #FFF;
+}
 
 .table .side{
   display: flex;
@@ -60,7 +79,6 @@ body{
 .table .side .hand{
   min-width: 50%;
   min-height: 50%;
-  /*background-color: #555;*/
 
   display: flex;
   flex-wrap: wrap;
@@ -87,8 +105,11 @@ body{
   top: 0;
 }
 
-.player-side .wallet img{
-  width: 5%;
+.table .action-list button{
+  padding: .5em;
+  font-size: .9em;
+  margin: .5em;
+  width: 8em;
 }
 
 .player-side .wallet span{
@@ -98,21 +119,35 @@ body{
 }
 
 .dealer-side{
-  /*background: red;*/
 }
+
 .dealer-side .hand{
 
 }
-.dealer-side .deck{
-  background-color: grey;
 
+.dealer-side .deck{
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -1em;
+  right: 2.5em;
+}
+
+.dealer-side .deck img{
+  width: 8em;
+  transform: rotate(90deg);
 }
 
 .player-side{
-  /*background: blue;*/
   border-right: 3px brown;
   border-right-style: outset;
+}
+
+.score{
+  display: flex;
+  justify-content: center;
+}
+
+.score span{
+  display: flex;
+  align-self: center;
+  margin-left: 1em;
 }
