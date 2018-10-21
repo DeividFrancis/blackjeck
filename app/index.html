@@ -9,10 +9,10 @@
 </head>
 <body>
   <div class="table">
-    <div class="bet">
+    <div id="bet-painel" class="bet">
       <span>bet :</span>
       <span>$</span>
-      <span>2000</span>
+      <span class="value">0</span>
     </div>
     <div class="action-list">
       <button id="hit" class="action" type="button" name="button">hit</button>
@@ -27,7 +27,7 @@
         <span class="coin">
           $
         </span>
-        <span id="#wallet">7,000</span>
+        <span id="wallet">7,000</span>
         <span id="coins-added">
           +720
         </span>
@@ -43,54 +43,46 @@
       </div>
     </div>
 
-    <div class="dealer-side side">
+    <div id="dealer-side" class="dealer-side side">
       <div class="deck">
         <img src="/img/cards/red_back.png" alt="">
       </div>
       <div class="hand">
-        <div class="card">
-          <img src="/img/cards/4D.png" alt="">
-        </div>
-        <div class="card">
-          <img src="/img/cards/8H.png" alt="">
-        </div>
-        <div class="card">
-          <img src="/img/cards/8H.png" alt="">
-        </div>
+        <!-- Load Ajax api -->
       </div>
       <div class="score">
         <h3>pts :</h3>
         <span>20</span>
       </div>
     </div>
-    <div class="bet-modal">
+    <div  id="bet-modal" class="bet-modal">
       <div class="painel">
         <span>RS</span>
-        <span id="bet-value">1000</span>
+        <span id="bet-value">0</span>
       </div>
-      <ul class="chips">
+      <ul id="chips" class="chips">
         <li class="chip">
           <button type="button" name="chip-value">
-            <span id="value">$1</span>
+            <span class="value">1</span>
           </button>
         </li>
         <li class="chip">
           <button type="button" name="chip-value">
-            <span id="value">$10</span>
+            <span class="value">10</span>
           </button>
         </li>
         <li class="chip">
           <button type="button" name="chip-value">
-            <span id="value">$100</span>
+            <span class="value">100</span>
           </button>
         </li>
         <li class="chip">
           <button type="button" name="chip-value">
-            <span id="value">$1000</span>
+            <span class="value">1000</span>
           </button>
         </li>
       </ul>
-      <div class="bet-deal">
+      <div id="bet-deal" class="bet-deal">
         <button type="button" name="button">
           <span>Deal</span>
         </button>

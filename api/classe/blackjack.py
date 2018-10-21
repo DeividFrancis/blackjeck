@@ -38,10 +38,9 @@ class Blackjack(object):
                 total += card
         return total
 
-    def hit(self,hand):
+    def hit(self):
         card = self.deck.pop()
-        hand.append(card)
-        return hand
+        return card
 
     def clear(self):
         if os.name == 'nt':
@@ -55,14 +54,17 @@ class Blackjack(object):
         print( "You have a " + str(player_hand) + " for a total of " + str(self.total(player_hand)))
 
     def blackjack(self,dealer_hand, player_hand):
+        msg = "continue"
+
         if self.total(player_hand) == 21:
             self.print_results(dealer_hand, player_hand)
-            print( "Congratulations! You got a Blackjack!\n")
+            msg = "Congratulations! You got a Blackjack!"
             self.play_again()
         elif self.total(dealer_hand) == 21:
             self.print_results(dealer_hand, player_hand)		
-            print( "Sorry, you lose. The dealer got a blackjack.\n")
+            msg = "Sorry, you lose. The dealer got a blackjack."
             # self.seplay_again()
+        return {"message": msg}
 
     def score(self,dealer_hand, player_hand):
         if self.total(player_hand) == 21:

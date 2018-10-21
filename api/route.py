@@ -19,13 +19,16 @@ app.config['JSON_ADD_STATUS'] = True
 
 # Game
 game = Blackjack()
-hand = []
+hands = {
+    "player-side": [],
+    "dealer-side": []
+}
 session_bet = 0
 
 @app.route('/')
 def index():
-    now = datetime.utcnow()
-    return json_response(time=now)
+    hands['player-side'] = None
+    hands['player-side'] = None
 
 @app.route('/deck')
 @as_json
@@ -36,7 +39,6 @@ def start():
 @app.route('/bet/<coin>')
 @as_json
 def bet(coin):
-    session_bet = coin
     res = {"message": "Aposta de RS: " + coin + " feita"}
     return res
 
@@ -46,22 +48,31 @@ def deal():
     hand = game.deal()
     return hand
 
-@app.route('/hit')
+@app.route('/hit/<player>')
 @as_json
-def hit():
-    return game.hit(hand)
+def hit(player):
+    hit = game.hit()
+    hands[player].append(hit)
+    return hit
 
 @app.route('/total')
 @as_json
 def total():
     pass
 
-@app.route('/blackjack/<int:dealer>/<int:player>')
+@app.route('/wallet')
 @as_json
-def blackjack(dealer,player):
+def wallet():
+    return {"wallet": 5000}
+
+@app.route('/blackjack/<player>/<sum>')
+@as_json
+def blackjack(player, sum):
+    player = hands["player-side"]
+    dealer = hands["dealer-side"]
+
     msg = game.blackjack(dealer,player)
-    res = {}
-    return res
+    return msg
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
