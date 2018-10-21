@@ -51,6 +51,11 @@ def deal():
 def hit():
     return game.hit(hand)
 
+@app.route('/total')
+@as_json
+def total():
+    pass
+
 @app.route('/blackjack/<int:dealer>/<int:player>')
 @as_json
 def blackjack(dealer,player):

@@ -115,9 +115,9 @@ class Deck(object):
                 v = v[:1] # Pega somente o primeiro caractere
                 url = v + h[:1] + ".png" # Monta o link da imagem
                 if v == "A": v = 1 
-                if v == "Q": v = 11
-                if v == "J": v = 12
-                if v == "K": v = 13
+                if v == "Q": v = 10
+                if v == "J": v = 10
+                if v == "K": v = 10
 
                 card = {
                     "honor" : h,

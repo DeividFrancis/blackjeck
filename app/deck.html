@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Deck</title>
+    <link rel="stylesheet" href="/css/master.css">
+    <link rel="stylesheet" href="/css/animation.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+</head>
+
+<body>
+    <div id="deck">
+        <div class="table">
+            <div class="side">
+                <div id="hand" class="hand">
+                    <!-- Cartas carregadas automaticamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var api = "localhost:5000";
+        var url = "//" + api;
+        $(document).ready(() => {
+            $.ajax({
+                url: url + "/deck",
+                success: (data) => {
+                    load_deck(data);
+                }
+            })
+        })
+
+        function load_deck(data) {
+            data.forEach(card => {
+                var cardHmtl = $("<div>")
+                    .addClass("card")
+                    .attr("data-card-value", card.value)
+                    .attr("data-card-honor", card.honor);
+                var imgHtml = $("<img>").attr("src", "/img/cards/" + card.url);
+                cardHmtl.append(imgHtml);
+                $("#hand").append(cardHmtl);
+            });
+        }
+    </script>
+</body>
+
+</html>
