@@ -41,25 +41,29 @@ body{
   display: flex;
   flex-direction: column;
   align-self: center;
+  border:3px double white;
 }
-
+.table .bet-modal h3{
+  color: #fff;
+  text-align: center;
+}
 .table .bet-modal .chips{
-  width: 30%;
   display: flex;
-  align-content: space-around;
+  align-items: center;
+  margin-right: 1em;
+  margin-right: 1.5em;
 }
 
 .table .bet-modal .chips button{
-  margin: 0.3em;
-  padding: 0;
   background-image: url('../img/coin.png');
   background-size: cover;
   background-position: center;
-  width: 6.5em;
+  width: 10em;
   background-color: transparent;
-  height: 3.5em;
-  font-size: 1.5em;
+  height: 5em;
+  font-size: 1em;
   border: none;
+  color: #03744C;
 }
 
 .table .bet-modal .painel{
@@ -71,6 +75,12 @@ body{
 .table .bet-modal .bet-deal{
   display: flex;
   align-self: center;
+  padding-bottom: 1em;
+}
+
+.table .bet-modal .bet-deal button{
+  padding: 0em 1em;
+  font-size: 1.5em;
 }
 
 button{
