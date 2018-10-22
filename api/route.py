@@ -38,8 +38,8 @@ hands = {
 @app.route('/')
 def index():
     session["name"] = "batata"
-    # hands['player-side'] = None
-    # hands['player-side'] = None
+    hands['player-side']["hand"] = []
+    hands['dealer-side']["hand"] = []
     return session["name"]
 
 @app.route('/deck')

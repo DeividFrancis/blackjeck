@@ -1,7 +1,7 @@
 var api = "localhost:5000";
 var url = "//" + api;
 $(document).ready(() => {
-    // req_api(url);
+    req_api(url);
     console.log("Hello");
     // deal();
     bet_modal();
