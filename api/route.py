@@ -3,16 +3,19 @@ import json
 from datetime import datetime
 
 # Libs
-from flask import Flask, request
+from flask import Flask, request, session
 from flask_json import FlaskJSON, JsonError, json_response, as_json
 from flask_cors import CORS
 
 # Mys
 from classe.blackjack import Blackjack, Deck
 
+SECRET_KEY = 'develop'
 app = Flask(__name__)
+app.config.from_object(__name__)
 CORS(app)
 FlaskJSON(app)
+
 
 app.config['JSON_ADD_STATUS'] = True
 
@@ -20,15 +23,24 @@ app.config['JSON_ADD_STATUS'] = True
 # Game
 game = Blackjack()
 hands = {
-    "player-side": [],
-    "dealer-side": []
+    "player-side": {
+        "wallet": 0,
+        "hand":[],
+        "turns": 0
+    },
+    "dealer-side": {
+        "wallet": 0,
+        "hand":[],
+        "turns": 0
+    }
 }
-session_bet = 0
 
 @app.route('/')
 def index():
-    hands['player-side'] = None
-    hands['player-side'] = None
+    session["name"] = "batata"
+    # hands['player-side'] = None
+    # hands['player-side'] = None
+    return session["name"]
 
 @app.route('/deck')
 @as_json
@@ -42,35 +54,45 @@ def bet(coin):
     res = {"message": "Aposta de RS: " + coin + " feita"}
     return res
 
-@app.route('/deal')
+@app.route('/deal/<player>')
 @as_json
-def deal():
+def deal(player):
     hand = game.deal()
-    return hand
+    hands[player]["hand"] += hand
+    return  hands[player]["hand"]
 
 @app.route('/hit/<player>')
 @as_json
 def hit(player):
     hit = game.hit()
-    hands[player].append(hit)
+    hands[player]["hand"].append(hit)
     return hit
 
-@app.route('/total')
+@app.route('/total/<player>')
 @as_json
-def total():
-    pass
+def total(player):
+    total = game.total(hands[player])
+    return total
+
+@app.route('/score')
+@as_json
+def score():
+    dealer = hands["dealer-side"]
+    player = hands["player-side"]
+    score = game.score(dealer, player)
+    return score
 
 @app.route('/wallet')
 @as_json
 def wallet():
-    return {"wallet": 5000}
+    hands["player-side"]["wallet"] = 5000
+    return {"wallet": hands["player-side"]["wallet"]}
 
-@app.route('/blackjack/<player>/<sum>')
+@app.route('/blackjack')
 @as_json
-def blackjack(player, sum):
+def blackjack():
     player = hands["player-side"]
     dealer = hands["dealer-side"]
-
     msg = game.blackjack(dealer,player)
     return msg
 

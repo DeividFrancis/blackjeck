@@ -1,9 +1,5 @@
 var api = "localhost:5000";
 var url = "//" + api;
-
-var player_hand = []
-var dealer_hand = []
-
 $(document).ready(() => {
     // req_api(url);
     console.log("Hello");
@@ -65,7 +61,7 @@ function wallet() {
 }
 
 function deal(player) {
-    var data = req_api(url + "/deal");
+    var data = req_api(url + "/deal/"+player);
     data.forEach(card => {
         var c = cardHtml(card);
         $("#" + player + " .hand").append(c);
@@ -105,13 +101,13 @@ function sum_cards() {
             sum += parseInt(v);
         });
         $(el).parent().find(".score").find("span").text(sum);
-        blackjack(player, sum);
+        blackjack();
         console.log(player);
     });
 }
 
-function blackjack(player,sum) {
-    res = req_api(url + "/blackjack/"+player+"/"+sum);
+function blackjack() {
+    res = req_api(url + "/blackjack");
     console.log(res);
 }
 
@@ -135,13 +131,15 @@ function req_api(link) {
 }
 
 // Builder html
-
 function cardHtml(card) {
     var cardEl = $("<div>")
         .addClass("card")
         .attr("data-card-value", card.value)
         .attr("data-card-honor", card.honor);
     var imgHtml = $("<img>").attr("src", "/img/cards/" + card.url);
+    // console.log("---------------");
+    // console.log(card);
+    
     cardEl.append(imgHtml);
     return cardEl;
 }
