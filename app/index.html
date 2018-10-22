@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Blackjack</title>
   <link rel="stylesheet" href="/css/master.css">
   <link rel="stylesheet" href="/css/animation.css">
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -23,14 +23,10 @@
     <div id ="player-side"
     class="player-side side">
       <div class="wallet">
-        <img src="/img/coins.png" alt="">
-        <span class="coin">
-          $
-        </span>
+        <span class="title">Wallet</span>
+        <span class="coin">$</span>
         <span id="wallet">7,000</span>
-        <span id="coins-added">
-          +720
-        </span>
+        <span id="coins-added"></span>
       </div>
 
       <div class="hand">
@@ -39,7 +35,7 @@
 
       <div class="score">
         <h3>pts :</h3>
-        <span>14</span>
+        <span id="pts"></span>
       </div>
     </div>
 
@@ -52,7 +48,7 @@
       </div>
       <div class="score">
         <h3>pts :</h3>
-        <span>20</span>
+        <span id="pts"></span>
       </div>
     </div>
     <div  id="bet-modal" class="bet-modal">
