@@ -153,9 +153,9 @@ button:hover{
   font-size: 1.2em;
 }
 
-.wallet span#coins-added{
-  display: inline-flex;
-  color: rgb(92, 255, 23);
+.wallet span#coins-transaction{
+  position: absolute;
+  left: .7em;
 }
 
 .player-side .wallet span{

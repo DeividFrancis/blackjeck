@@ -91,7 +91,7 @@ function hit_api(player) {
 function sum_cards() {
     console.log("sum cards");
     var hand = $(".hand");
-    
+
     hand.each((k, el) => {
         var player = $(el).closest(".side").attr("id");
         $this = $(el);
@@ -105,6 +105,7 @@ function sum_cards() {
         console.log(player);
     });
 }
+
 
 function blackjack() {
     res = req_api(url + "/blackjack");
@@ -129,7 +130,6 @@ function req_api(link) {
     });
     return res
 }
-
 // Builder html
 function cardHtml(card) {
     var cardEl = $("<div>")
@@ -139,7 +139,7 @@ function cardHtml(card) {
     var imgHtml = $("<img>").attr("src", "/img/cards/" + card.url);
     // console.log("---------------");
     // console.log(card);
-    
+
     cardEl.append(imgHtml);
     return cardEl;
 }

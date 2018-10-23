@@ -28,3 +28,36 @@
   backface-visibility: hidden;
   box-shadow: 0 0 4px #000;
 }
+
+#coins-transaction{
+  animation: fadeCoin 2s forwards;
+}
+
+#coins-transaction.added{
+    color: rgb(92, 255, 23);
+}
+#coins-transaction.added::before{
+    content: "+"
+}
+#coins-transaction.remoded{
+    color: rgb(255, 30, 23);
+}
+#coins-transaction.remoded::before{
+    content: "-"
+}
+
+@keyframes fadeCoin {
+  0%{
+    opacity: 0;
+    bottom: 0;
+  }
+  50%{
+    opacity: 1;
+    bottom: -35px;
+  }
+  100%{
+    opacity: 0;
+    bottom: -35px;
+    display: none;
+  }
+}
