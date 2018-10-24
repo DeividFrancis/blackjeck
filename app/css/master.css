@@ -178,7 +178,7 @@ button:hover{
 
 .dealer-side .deck img{
   width: 8em;
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
 }
 
 .player-side{
