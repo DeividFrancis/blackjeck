@@ -174,11 +174,12 @@ button:hover{
   position: absolute;
   top: -1em;
   right: 2.5em;
+  width: 9em;
 }
 
 .dealer-side .deck img{
-  width: 8em;
   transform: rotate(-90deg);
+  width: 100%;
 }
 
 .player-side{

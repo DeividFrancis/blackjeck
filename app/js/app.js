@@ -83,9 +83,8 @@ function hit_api(player) {
     console.log(card);
 
     var c = cardHtml(card);
-    p.find(".hand").prepend(c);
+    p.find(".hand").append(c);
     sum_cards();
-
 }
 
 function sum_cards() {
@@ -133,13 +132,13 @@ function req_api(link) {
 // Builder html
 function cardHtml(card) {
     var cardEl = $("<div>")
-        .addClass("card")
-        .attr("data-card-value", card.value)
-        .attr("data-card-honor", card.honor);
+    .addClass("card card_flip")
+    .attr("data-card-value", card.value)
+    .attr("data-card-honor", card.honor);
     var imgHtml = $("<img>").attr("src", "/img/cards/" + card.url);
     // console.log("---------------");
     // console.log(card);
 
-    cardEl.append(imgHtml);
+    cardEl.prepend(imgHtml);
     return cardEl;
 }

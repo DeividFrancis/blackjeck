@@ -31,7 +31,11 @@
   }
 }
 
-#first-card-pushed{
+#card_first_hit.card1{
+
+}
+
+#card_hit_to_dealer{
   animation: pushToDealer 1s forwards;
 }
 
@@ -52,23 +56,34 @@
   }
 }
 
-#card-transaction{
-  animation: pushToPlayer 1s forwards;
+#card_hit_to_player{
+  position: fixed;
+  width: 8em;
+  animation: hit_card 1s forwards;
 }
 
-@keyframes pushToPlayer {
+@keyframes hit_card {
   0%{
-    width: 7em;
-    position: fixed;
     top: -1em;
     right: 2.5em;
-    transform: rotateZ(-90deg);
   }
   100%{
-    width: 8em;
-    position: fixed;
     top: 20%;
     right: 71%;
     transform: rotateZ(360deg);
+    transform: rotateY(90deg);
+  }
+}
+
+.card_flip{
+  animation: fliping 1s forwards;
+}
+
+@keyframes fliping {
+  0%{
+    transform: rotateY(90deg);
+  }
+  100%{
+    transform: rotateY(0deg);
   }
 }
