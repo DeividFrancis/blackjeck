@@ -10,6 +10,7 @@ $(document).ready(() => {
     hit_btn();
     btn_stand();
     btn_reload();
+    
 });
 
 function btn_stand() {
