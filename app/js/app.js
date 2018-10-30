@@ -8,24 +8,33 @@ $(document).ready(() => {
     wallet()
     sum_cards();
     hit_btn();
-    stand();
+    btn_stand();
+    btn_reload();
 });
 
-function stand() {
+function btn_stand() {
     var stand_btn = $("#stand");
     var dealer_side = $("#dealer-side");
+
     stand_btn.click(() => {
-        hit = true;
-        while(hit){
-            console.log("stand" + pts);
-            var pts = $("#dealer-side").find(".score").find("span").text();
-            if (pts < 17){
-                hit_api("dealer-side");
-            }else{
-                hit = false;
-            }
-        }
+        stand();
     });
+}
+function stand(){
+    // remover fake card e hit card antes do loop
+    $("[data-card-value=0]").hide();
+    hit_api("dealer-side");
+    //
+    hit = true;
+    while(hit){
+        console.log("stand" + pts);
+        var pts = $("#dealer-side").find(".score").find("span").text();
+        if (pts < 17){
+            hit_api("dealer-side");
+        }else{
+            hit = false;
+        }
+    }
 }
 
 function bet_modal() {
@@ -49,11 +58,24 @@ function bet_modal() {
         bet_modal.hide();
         bet_painel.text(bet * 2);
         deal("player-side");
-        deal("dealer-side");
+        // deal("dealer-side");
+        dealer_deal();
     });
 
 }
 
+function dealer_deal(){
+    hit_api("dealer-side");
+    card_fake();
+}
+
+function card_fake(){
+    var card = {
+        value: 0,
+        url: "red_back.png"
+    };
+    $("#dealer-side").find(".hand").append(cardHtml(card));
+}
 
 function wallet() {
     var res = req_api(url + "/wallet")
@@ -72,8 +94,18 @@ function deal(player) {
 function hit_btn(player) {
     var hitBtn = $("#hit");
     hitBtn.click(() => {
-        console.log("HIT BTN");
         hit_api("player-side");
+        // Verifa se a soma é >= 21 se sim: ja da o stand se não continua;
+        // var total = req_api(url + "/total/player-side");
+        var total = $("#player-side #pts").text();
+        if(total < 21){
+            console.log("continue");
+        }else if(total == 21){
+            console.log("Blackjack");
+        }else if(total > 21){
+            console.log("Perdeu playboy");
+        }
+
     });
 }
 
@@ -141,4 +173,11 @@ function cardHtml(card) {
 
     cardEl.prepend(imgHtml);
     return cardEl;
+}
+
+function btn_reload(){
+    $("#reload").click(() => {
+        console.log("meu ovo");
+        res = req_api(url + "/reload/deck");
+    })
 }

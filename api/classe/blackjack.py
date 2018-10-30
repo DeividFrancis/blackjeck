@@ -7,6 +7,9 @@ class Blackjack(object):
     def __init__(self):
         self.deck = Deck().get_deck()
 
+    def reload_deck(self):
+        self.deck = Deck().get_deck()
+        
     def deal(self):
         hand = []
         for i in range(2):

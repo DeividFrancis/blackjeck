@@ -42,6 +42,11 @@ def index():
     hands['dealer-side']["hand"] = []
     return session["name"]
 
+@app.route('/reload/deck')
+def reload():
+    game.reload_deck()
+
+
 @app.route('/deck')
 @as_json
 def start():
