@@ -10,7 +10,7 @@ $(document).ready(() => {
     hit_btn();
     btn_stand();
     btn_reload();
-    
+    $('.player-alert').hide();
 });
 
 function btn_stand() {
@@ -28,7 +28,6 @@ function stand(){
     //
     hit = true;
     while(hit){
-        console.log("stand" + pts);
         var pts = $("#dealer-side").find(".score").find("span").text();
         if (pts < 17){
             hit_api("dealer-side");
@@ -36,6 +35,8 @@ function stand(){
             hit = false;
         }
     }
+
+
 }
 
 function bet_modal() {
@@ -83,6 +84,11 @@ function wallet() {
     $("#wallet").text(res.wallet);
 }
 
+
+function wallet_manager(type, qte) {
+
+}
+
 function deal(player) {
     var data = req_api(url + "/deal/"+player);
     data.forEach(card => {
@@ -102,12 +108,27 @@ function hit_btn(player) {
         if(total < 21){
             console.log("continue");
         }else if(total == 21){
-            console.log("Blackjack");
+            // show_alert("Blackjack");
         }else if(total > 21){
-            console.log("Perdeu playboy");
+            // show_alert("Perdeu Playboy");
         }
 
     });
+}
+
+function show_alert(texto) {
+    var alert = $("<span>"+texto+"</span>");
+    $('.player-alert').show();
+    $('.player-alert').addClass('overlay');
+    $(".player-alert").append(alert);
+    setTimeout(function () {
+        $('.player-alert').removeClass('overlay');
+        $(".player-alert").find("span").remove();
+        $('.player-alert').hide();
+    }, 5000);
+    setTimeout(function () {
+        location.reload();
+    }, 2000);
 }
 
 function hit_api(player) {

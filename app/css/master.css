@@ -206,3 +206,27 @@ button:hover{
   margin-left: .3em;
   font-size: 3em;
 }
+
+.player-alert{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+}
+
+.overlay{
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.player-alert span{
+  font-size: 12em;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  text-transform: capitalize;
+  color: #FFF;
+}
