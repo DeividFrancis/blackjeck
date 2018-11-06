@@ -18,6 +18,7 @@ services:
       dockerfile: ./flask.dockerfile
       context: .
     container_name: api
+    restart: always
     volumes:
       - ./api:/home/blackjeck
     ports:

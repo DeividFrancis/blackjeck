@@ -85,8 +85,16 @@ function wallet() {
 }
 
 
-function wallet_manager(type, qte) {
-
+function wallet_manager(type) {
+    var total_bet = $("#bet-painel").find("span.value").text();
+    console.log(total_bet);
+    if (type=="win") {
+        coins_transaction(total_bet ,"added");
+        req_api(url + "/wallet/"+total_bet);
+    }else {
+        coins_transaction(total_bet ,"remoded");
+        req_api(url + "/wallet/"+(total_bet*-1));
+    }
 }
 
 function deal(player) {
@@ -108,11 +116,12 @@ function hit_btn(player) {
         if(total < 21){
             console.log("continue");
         }else if(total == 21){
-            // show_alert("Blackjack");
+            show_alert("Blackjack");
+            wallet_manager("win");
         }else if(total > 21){
-            // show_alert("Perdeu Playboy");
+            show_alert("You Lose. Dealer Won!");
+            wallet_manager("lose");
         }
-
     });
 }
 
@@ -125,7 +134,7 @@ function show_alert(texto) {
         $('.player-alert').removeClass('overlay');
         $(".player-alert").find("span").remove();
         $('.player-alert').hide();
-    }, 5000);
+    }, 4000);
     setTimeout(function () {
         location.reload();
     }, 2000);

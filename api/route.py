@@ -93,6 +93,12 @@ def wallet():
     hands["player-side"]["wallet"] = 5000
     return {"wallet": hands["player-side"]["wallet"]}
 
+@app.route('/wallet/<value:int>')
+@as_json
+def wallet_manager(value):
+    hands["player-side"]["wallet"] += value
+    return {"wallet": hands["player-side"]["wallet"]}
+
 @app.route('/blackjack')
 @as_json
 def blackjack():
