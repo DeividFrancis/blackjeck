@@ -1,16 +1,23 @@
+var hand = $(".hand");
+var bet_modal = $("#bet-modal");
+var sccore = $(".score").find("span");
+var bet_modal_value = $("#bet-value");
+var bet_painel_value = $("#bet-painel").find(".value");
+var bet = 0;
 var api = "localhost:5000";
 var url = "//" + api;
+
 $(document).ready(() => {
     req_api(url);
     console.log("Hello");
     // deal();
-    bet_modal();
+    bet_painel();
     wallet()
     sum_cards();
     hit_btn();
     btn_stand();
     btn_reload();
-    
+
     $('.player-alert').hide();
 });
 
@@ -40,11 +47,7 @@ function stand(){
 
 }
 
-function bet_modal() {
-    var bet = 0;
-    var bet_modal = $("#bet-modal");
-    var bet_painel = $("#bet-painel").find(".value");
-    var bet_value_el = $("#bet-value");
+function bet_painel() {
     var bet_deal = $("#bet-deal");
 
     var chips = $("#chips");
@@ -53,13 +56,13 @@ function bet_modal() {
             var val = $(chip).find(".value").text();
             bet += parseInt(val);
             console.log(val);
-            bet_value_el.text(bet);
+            bet_modal_value.text(bet);
         });
     });
 
     bet_deal.click(() => {
         bet_modal.hide();
-        bet_painel.text(bet * 2);
+        bet_painel_value.text(bet * 2);
         deal("player-side");
         // deal("dealer-side");
         dealer_deal();
@@ -89,13 +92,15 @@ function wallet() {
 function wallet_manager(type) {
     var total_bet = $("#bet-painel").find("span.value").text();
     console.log(total_bet);
+    var res = 0;
     if (type=="win") {
         coins_transaction(total_bet ,"added");
-        req_api(url + "/wallet/"+total_bet);
+        res = req_api(url + "/wallet/"+total_bet);
     }else {
         coins_transaction(total_bet ,"remoded");
-        req_api(url + "/wallet/"+(total_bet*-1));
+        res = req_api(url + "/wallet/"+(total_bet*-1));
     }
+    $("#wallet").text(res.wallet);
 }
 
 function deal(player) {
@@ -114,16 +119,38 @@ function hit_btn(player) {
         // Verifa se a soma é >= 21 se sim: ja da o stand se não continua;
         // var total = req_api(url + "/total/player-side");
         var total = $("#player-side #pts").text();
+        // verify_blackjack(player-pts, dealer-pts);
         if(total < 21){
             console.log("continue");
         }else if(total == 21){
             show_alert("Blackjack");
             wallet_manager("win");
+            new_round();
         }else if(total > 21){
             show_alert("You Lose. Dealer Won!");
             wallet_manager("lose");
+            new_round();
         }
     });
+}
+
+function new_round() {
+    // limpar as mãos
+    hand.html("");
+
+    // se o baralhar acabar, reembaralha
+    req_api(url + "/reload/deck");
+
+    //mostrar o bet novamente
+    bet_modal.show();
+    bet_modal_value.text("0");
+    bet_painel_value.text("0");
+
+    // limpar scoore
+    sccore.text("");
+
+    // limpar bet
+    bet = 0;
 }
 
 function show_alert(texto) {
@@ -135,9 +162,6 @@ function show_alert(texto) {
         $('.player-alert').removeClass('overlay');
         $(".player-alert").find("span").remove();
         $('.player-alert').hide();
-    }, 4000);
-    setTimeout(function () {
-        location.reload();
     }, 2000);
 }
 
@@ -153,7 +177,6 @@ function hit_api(player) {
 
 function sum_cards() {
     console.log("sum cards");
-    var hand = $(".hand");
 
     hand.each((k, el) => {
         var player = $(el).closest(".side").attr("id");

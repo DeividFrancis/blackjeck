@@ -42,8 +42,12 @@ def index():
     hands['dealer-side']["hand"] = []
     return session["name"]
 
+
 @app.route('/reload/deck')
+@as_json
 def reload():
+    hands['player-side']["hand"] = []
+    hands['dealer-side']["hand"] = []
     game.reload_deck()
 
 
@@ -93,9 +97,10 @@ def wallet():
     hands["player-side"]["wallet"] = 5000
     return {"wallet": hands["player-side"]["wallet"]}
 
-@app.route('/wallet/<value:int>')
+@app.route('/wallet/<value>')
 @as_json
 def wallet_manager(value):
+    value = int(value)
     hands["player-side"]["wallet"] += value
     return {"wallet": hands["player-side"]["wallet"]}
 
