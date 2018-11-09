@@ -38,6 +38,7 @@ hands = {
 @app.route('/')
 def index():
     session["name"] = "batata"
+    hands["player-side"]["wallet"] = 5000
     hands['player-side']["hand"] = []
     hands['dealer-side']["hand"] = []
     return session["name"]
@@ -94,7 +95,6 @@ def score():
 @app.route('/wallet')
 @as_json
 def wallet():
-    hands["player-side"]["wallet"] = 5000
     return {"wallet": hands["player-side"]["wallet"]}
 
 @app.route('/wallet/<value>')

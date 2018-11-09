@@ -131,6 +131,7 @@ class Deck(object):
                 if v == "Q": v = 10
                 if v == "J": v = 10
                 if v == "K": v = 10
+                if v == "1": v = 10 # Gambiarra pq tem um substring e pega somente 1 da carta 10
                 
                 if(type(v) is str):
                     v = int(v)
