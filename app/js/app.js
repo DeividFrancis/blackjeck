@@ -30,9 +30,16 @@ $(document).ready(() => {
     hit_btn();
     btn_stand();
     btn_reload();
-
+    check_wallet()
     console.log(card_master);
 });
+
+function check_wallet(){
+    var res = req_api(url + "/wallet");
+    if (res.wallet == 0) {
+        location.reload();
+    }
+}
 
 function btn_stand() {
     var stand_btn = $("#stand");
@@ -43,7 +50,8 @@ function btn_stand() {
     });
 }
 
-function stand(){
+function stand() {
+    
     // remover fake card e hit card antes do loop
     $("[data-card-value=0]").hide();
     hit_local();
@@ -55,23 +63,48 @@ function stand(){
             hit = false;
         }
     }
-    // verify_blackjack((player_pts.text()), (dealer_pts.text()));
+    // verificar quem chegou mais perto de 21
+    compare_sccore(player_pts, dealer_pts);
+}
+
+
+function compare_sccore(pts_p, pts_d) {
+    pts_p = pts_p.text();
+    pts_d = pts_d.text();
+    var bvt = bet_value_total.text();
+    var msg;
+    var res = 0;
+    if ((21 - pts_p) < (21 - pts_d)) {
+        msg = "Ganhou"; 
+        res = VITORIA;
+    } else if ((21 - pts_p) > (21 - pts_d)) {
+        if (pts_d > 21) {
+            msg = "Ganhou";
+            res = VITORIA;
+        } else {
+            msg = "Perdeu";
+            rxes = DERROTA;
+        }
+    } else if (pts_d == pts_p) {
+        msg = "Empate";
+        res = EMPATE;
+    }
+    show_round_result(msg);
+    wallet_manager(res, bvt);
 }
 
 function verify_results(pts_p, pts_d) {
     pts_p = pts_p.text();
     pts_d = pts_d.text();
+    var res = 0;
     var bvt = bet_value_total.text();
-    // verficar blackjack
-    var bj = blackjack(pts_p, pts_d);
-    console.log(bj);
-    console.log(bvt);
-    wallet_manager(bj,bvt);
-        
-    // se eu comprei mais de 21
-
-    // se eu empatei
-    // se quem chegou mais perto apos o stand
+    if (pts_p > 21) {
+        show_round_result("perdeu");
+        res = DERROTA;
+        wallet_manager(res, bvt);
+    } else {
+        res = blackjack(pts_p, pts_d);
+    }
 }
 
 function blackjack(pts_p, pts_d) {
@@ -86,34 +119,56 @@ function blackjack(pts_p, pts_d) {
     return res; 
 }
 
-function show_alert(side, text) {
-    var span_alert = $("<span>"+text+"</span>");
-    setTimeout(function () {
-        $(side).append(span);
-    }, 2000);
+function show_round_result(text) {
+    var span_alert = $("<span>" + text + "</span>");
+    var botao = $("<button onclick=\"new_round()\">New Round</button>");
+    $(".alert").show();
+    $(".alert").addClass('overlay').append(span_alert);
+    $(".alert").append(botao);
 }
 
 function bet_painel() {
     var bet_deal = $("#bet-deal");
-
+    var bet_reset = $("#bet-reset");
+    var text = bet_modal.find("h3");
     var chips = $("#chips");
+    var response;
     chips.find(".chip").each((k, chip) => {
         $(chip).click((el) => {
             var val = $(chip).find(".value").text();
             bet += parseInt(val);
-            console.log(val);
             bet_value.text(bet);
+            response = check_wallet_bet(bet * 2, bet_deal, text);
         });
     });
-
-    bet_deal.click(() => {
-        bet_modal.hide();
-        bet_value_total.text(bet * 2);
-        deal("player-side");
-        // deal("dealer-side");
-        dealer_deal();
+    
+    bet_reset.click(() => {
+        text.html("How much money do you wanna bet?");
+        bet_deal.attr('hidden', false);
+        bet_value.text("0");
+        bet = 0;
     });
+    
+    bet_deal.click(() => {
+        if (response){
+            bet_value_total.text(bet * 2);
+            deal("player-side");
+            bet_modal.hide();
+            dealer_deal();
+        }
+    });
+}
 
+function check_wallet_bet(bet_val, btn, text) {
+    var res = req_api(url + "/wallet");
+    if (res.wallet >= bet_val) {
+        return true;
+    }
+    else{
+        text.html("Not Enough Money to bet");
+        btn.attr('hidden', true);
+        return false;
+    }
 }
 
 function dealer_deal(){
@@ -132,6 +187,7 @@ function card_fake(){
 function wallet() {
     var res = req_api(url + "/wallet")
     $("#wallet").text(res.wallet);
+
 }
 
 function wallet_manager(type, total_bet) {
@@ -159,7 +215,7 @@ function deal(player) {
     sum_cards();
 }
 
-function hit_btn(player) {
+function hit_btn() {
     var hitBtn = $("#hit");
     hitBtn.click(() => {
         hit_api("player-side");
@@ -171,6 +227,8 @@ function hit_btn(player) {
 
 
 function new_round() {
+    //verificar se tem dinheiro na wallet
+    check_wallet();
     // limpar as mãos
     hand.html("");
     // se o baralhar acabar, reembaralha
@@ -183,6 +241,8 @@ function new_round() {
     sccore.text("");
     // limpar bet
     bet = 0;
+    // limpar tela de resultados
+    $(".alert").html("").removeClass("overlay");
 }
 
 function hit_local() {
@@ -198,7 +258,6 @@ function hit_api(player) {
     var c = cardHtml(card);
     p.find(".hand").append(c);
     sum_cards();
-
 }
 
 function sum_cards() {
@@ -214,7 +273,6 @@ function sum_cards() {
         });
         $(el).parent().find(".score").find("span").text(sum);
     });
-
     verify_results(player_pts, dealer_pts);
 }
 function req_api(link) {

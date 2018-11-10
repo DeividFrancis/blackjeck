@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Blackjack</title>
@@ -7,9 +8,11 @@
   <link rel="stylesheet" href="/css/animation.css">
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
+
 <body>
   <div class="table">
-
+    <div class="alert">
+    </div>
     <div id="bet-painel" class="bet">
       <span>bet :</span>
       <span>$</span>
@@ -21,81 +24,81 @@
       <button id="double-down" class="action" type="button" name="button">double down</button>
       <button id="surrender" class="action" type="button" name="button">surrender</button>
     </div>
-    <div id ="player-side"
-    class="player-side side">
-    <div class="alert">
-    </div>
-    <div id="wallet-painel" class="wallet">
-      <span class="title">Wallet</span>
-      <span class="coin">$</span>
-      <span id="wallet">
-        <!-- Load via Ajax -->
-      </span>
-      <!-- <span id="coins-transaction" class="added">750</span> -->
-      <!-- <span id="coins-transaction">750</span> -->
+    <div id="player-side" class="player-side side">
+      <div id="wallet-painel" class="wallet">
+        <span class="title">Wallet</span>
+        <span class="coin">$</span>
+        <span id="wallet">
+          <!-- Load via Ajax -->
+        </span>
+        <!-- <span id="coins-transaction" class="added">750</span> -->
+        <!-- <span id="coins-transaction">750</span> -->
+      </div>
+
+      <div class="hand">
+        <!-- Load via jquery -->
+      </div>
+
+      <div class="score">
+        <h3>pts :</h3>
+        <span id="pts"></span>
+      </div>
     </div>
 
-    <div class="hand">
-      <!-- Load via jquery -->
+    <div id="dealer-side" class="dealer-side side">
+      <div class="deck">
+        <button id="reload">reshuffle deck</button>
+        <img src="/img/cards/deck.png" alt="baralho">
+      </div>
+      <div class="hand">
+        <!-- Load Ajax api -->
+      </div>
+      <div class="score">
+        <h3>pts :</h3>
+        <span id="pts"></span>
+      </div>
     </div>
-
-    <div class="score">
-      <h3>pts :</h3>
-      <span id="pts"></span>
+    <div id="bet-modal" class="bet-modal">
+      <h3>How much money do you wanna bet?</h3>
+      <div class="painel">
+        <span>$</span>
+        <span id="bet-value">0</span>
+      </div>
+      <ul id="chips" class="chips">
+        <li class="chip">
+          <button type="button" name="chip-value">$
+            <span class="value">1</span>
+          </button>
+        </li>
+        <li class="chip">
+          <button type="button" name="chip-value">$
+            <span class="value">10</span>
+          </button>
+        </li>
+        <li class="chip">
+          <button type="button" name="chip-value">$
+            <span class="value">100</span>
+          </button>
+        </li>
+        <li class="chip">
+          <button type="button" name="chip-value">$
+            <span class="value">1000</span>
+          </button>
+        </li>
+      </ul>
+      <div class="bet-deal">
+        <button id="bet-deal" type="button" name="button">
+          <span>Deal</span>
+        </button>
+        <button id="bet-reset" type="button" name="button">
+          <span>Reset Bet</span>
+        </button>
+      </div>
     </div>
   </div>
-
-  <div id="dealer-side" class="dealer-side side">
-    <div class="alert">
-    </div>
-    <div class="deck">
-      <button id="reload">reshuffle deck</button>
-      <img src="/img/cards/deck.png" alt="baralho">
-    </div>
-    <div class="hand">
-      <!-- Load Ajax api -->
-    </div>
-    <div class="score">
-      <h3>pts :</h3>
-      <span id="pts"></span>
-    </div>
   </div>
-  <div  id="bet-modal" class="bet-modal">
-    <h3>How much money do you wanna bet?</h3>
-    <div class="painel">
-      <span>$</span>
-      <span id="bet-value">0</span>
-    </div>
-    <ul id="chips" class="chips">
-      <li class="chip">
-        <button type="button" name="chip-value">$
-          <span class="value">1</span>
-        </button>
-      </li>
-      <li class="chip">
-        <button type="button" name="chip-value">$
-          <span class="value">10</span>
-        </button>
-      </li>
-      <li class="chip">
-        <button type="button" name="chip-value">$
-          <span class="value">100</span>
-        </button>
-      </li>
-      <li class="chip">
-        <button type="button" name="chip-value">$
-          <span class="value">1000</span>
-        </button>
-      </li>
-    </ul>
-    <div id="bet-deal" class="bet-deal">
-      <button type="button" name="button">
-        <span>Deal</span>
-      </button>
-    </div>
-  </div>
-</div>
-<script src="js/animation.js"></script>
-<script src="js/app.js"></script>
+  <script src="js/animation.js"></script>
+  <script src="js/app.js"></script>
 </body>
+
 </html>

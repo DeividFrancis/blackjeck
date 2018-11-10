@@ -43,10 +43,12 @@ body{
   align-self: center;
   border:3px double white;
 }
+
 .table .bet-modal h3{
   color: #fff;
   text-align: center;
 }
+
 .table .bet-modal .chips{
   display: flex;
   align-items: center;
@@ -80,7 +82,9 @@ body{
 
 .table .bet-modal .bet-deal button{
   padding: 0em 1em;
-  font-size: 1.5em;
+  font-size: 1.2em;
+  margin: 1em;
+  width: 8em;
 }
 
 button{
@@ -163,13 +167,6 @@ button:hover{
   font-size: 1.8em;
 }
 
-.dealer-side{
-}
-
-.dealer-side .hand{
-
-}
-
 .dealer-side .deck{
   position: absolute;
   top: -1em;
@@ -190,10 +187,6 @@ button:hover{
   padding: .5em;
 }
 
-.player-side{
-
-}
-
 .score{
   display: flex;
   justify-content: center;
@@ -207,22 +200,38 @@ button:hover{
   font-size: 3em;
 }
 
+.overlay{
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
 .alert{
-  display: flex;
-  justify-content: space-around;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+
+.alert button{
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: .5em;
 }
 
 .alert span{
   position: absolute;
   top: 60%;
-  font-size: 1.5em;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5em;
   text-align: center;
   text-transform: capitalize;
   color: rgba(232, 233, 212, 0.8);
-  animation: fadeAlert forwards 2000ms;
+  animation: fadeIn 2000ms forwards;
 }
 
-@keyframes fadeAlert {
+@keyframes fadeIn {
   0%{
     opacity: 0;
   }
