@@ -53,7 +53,7 @@ function btn_stand() {
 function stand() {
     
     // remover fake card e hit card antes do loop
-    $("[data-card-value=0]").hide();
+    
     hit_local();
     hit = true;
     while(hit){
@@ -62,6 +62,7 @@ function stand() {
         }else{
             hit = false;
         }
+        verify_results(player_pts, dealer_pts);
     }
     // verificar quem chegou mais perto de 21
     compare_sccore(player_pts, dealer_pts);
@@ -102,6 +103,7 @@ function verify_results(pts_p, pts_d) {
         show_round_result("perdeu");
         res = DERROTA;
         wallet_manager(res, bvt);
+        hit_local2();
     } else {
         res = blackjack(pts_p, pts_d);
     }
@@ -138,7 +140,7 @@ function bet_painel() {
             var val = $(chip).find(".value").text();
             bet += parseInt(val);
             bet_value.text(bet);
-            response = check_wallet_bet(bet * 2, bet_deal, text);
+            response = check_wallet_bet(bet, bet_deal, text);
         });
     });
     
@@ -192,7 +194,8 @@ function wallet() {
 
 function wallet_manager(type, total_bet) {
     // if type equals CONTINUE
-    var res = {"wallet": 0};
+    var res = { "wallet": 0 };
+    total_bet /= 2;
 
     if (type == VITORIA) {
         coins_transaction(total_bet ,"added");
@@ -221,6 +224,7 @@ function hit_btn() {
         hit_api("player-side");
         // Verifa se a soma é >= 21 se sim: ja da o stand se não continua;
         // var total = req_api(url + "/total/player-side");
+        verify_results(player_pts, dealer_pts);
     });
 }
 
@@ -246,6 +250,11 @@ function new_round() {
 }
 
 function hit_local() {
+    hit_local2();
+}
+
+function hit_local2() {
+    $("[data-card-value=0]").hide();
     var d = $("#dealer-side");
     var c = cardHtml(card_master);
     d.find(".hand").append(c);
@@ -273,7 +282,6 @@ function sum_cards() {
         });
         $(el).parent().find(".score").find("span").text(sum);
     });
-    verify_results(player_pts, dealer_pts);
 }
 function req_api(link) {
     var res = "Não carregou o Ajax";
