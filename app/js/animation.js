@@ -41,3 +41,18 @@ function card_flip() {
   //   card.remove();
   // }, 1000);
 }
+
+function animate_wallet(value) {
+  var my_wallet = $("#wallet").text();
+
+  for (var i = 0; i <= value; i++){
+    var j = (i >= 100) ? 100 : 1;
+    delay_bet(j, my_wallet);
+  }
+}
+
+function delay_bet(i, my_wallet) {
+  setTimeout(function () {
+    $("#wallet").text(my_wallet-i);
+  }, i*10);
+}

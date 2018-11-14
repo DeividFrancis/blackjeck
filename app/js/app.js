@@ -8,6 +8,7 @@ var player_pts = $("#player-side").find(".score").find("span");
 var bet = 0;
 var api = "localhost:5000";
 var url = "//" + api;
+var card_master = req_api(url + "/hit/dealer-side");
 
 // Condições do jogo
 var BLACKJACK = 21;
@@ -18,11 +19,10 @@ var EMPATE   = 3;
 
 // Teste para guardar a carta 
 // retorna um objeto card talkei
-var card_master = req_api(url + "/hit/dealer-side");
 
 $(document).ready(() => {
     req_api(url);
-    console.log("Hello");
+    // console.log("Hello");
     // deal();
     bet_painel();
     wallet()
@@ -31,7 +31,7 @@ $(document).ready(() => {
     btn_stand();
     btn_reload();
     check_wallet()
-    console.log(card_master);
+    // console.log(card_master);
 });
 
 function check_wallet(){
@@ -106,6 +106,12 @@ function verify_results(pts_p, pts_d) {
         hit_local2();
     } else {
         res = blackjack(pts_p, pts_d);
+        if (res == VITORIA) {
+            show_round_result("blackjack");
+            wallet_manager(res, bvt);
+            hit_local2();
+            
+        }
     }
 }
 
@@ -135,9 +141,14 @@ function bet_painel() {
     var text = bet_modal.find("h3");
     var chips = $("#chips");
     var response;
+    var res = { "wallet": 0 };
     chips.find(".chip").each((k, chip) => {
         $(chip).click((el) => {
             var val = $(chip).find(".value").text();
+            // animate_wallet(val);
+            coins_transaction(val ,"remoded");
+            res = req_api(url + "/wallet/" + (val * -1));
+            $("#wallet").text(res.wallet);
             bet += parseInt(val);
             bet_value.text(bet);
             response = check_wallet_bet(bet, bet_deal, text);
@@ -145,31 +156,35 @@ function bet_painel() {
     });
     
     bet_reset.click(() => {
+        res = req_api(url + "/wallet/" + bet);
+        $("#wallet").text(res.wallet);
         text.html("How much money do you wanna bet?");
+        $('[name=chip-value]').removeAttr('disabled');
         bet_deal.attr('hidden', false);
         bet_value.text("0");
         bet = 0;
     });
     
     bet_deal.click(() => {
-        if (response){
-            bet_value_total.text(bet * 2);
-            deal("player-side");
-            bet_modal.hide();
-            dealer_deal();
-        }
+        bet_value_total.text(bet * 2);
+        deal("player-side");
+        bet_modal.hide();
+        dealer_deal();
+        $('.overlay').hide();
     });
 }
 
 function check_wallet_bet(bet_val, btn, text) {
     var res = req_api(url + "/wallet");
-    if (res.wallet >= bet_val) {
-        return true;
+    if (res.wallet == 0) {
+        $('[name=chip-value]').attr('disabled', 'true');
     }
-    else{
+    else if (res.wallet < 0) {
         text.html("Not Enough Money to bet");
         btn.attr('hidden', true);
-        return false;
+        $('[name=chip-value]').attr('disabled', 'true');
+    } else {
+        $('[name=chip-value]').removeAttr('disabled');
     }
 }
 
@@ -195,16 +210,14 @@ function wallet() {
 function wallet_manager(type, total_bet) {
     // if type equals CONTINUE
     var res = { "wallet": 0 };
-    total_bet /= 2;
 
     if (type == VITORIA) {
         coins_transaction(total_bet ,"added");
         res = req_api(url + "/wallet/"+total_bet);
     }else if (type == DERROTA){
-        coins_transaction(total_bet ,"remoded");
-        res = req_api(url + "/wallet/"+(total_bet*-1));
-    } else {
-        res = req_api(url + "/wallet");
+        res = req_api(url + "/wallet/"+0);
+    } else if(type == EMPATE){
+        res = req_api(url + "/wallet"+(total_bet/2));
     }
     $("#wallet").text(res.wallet);
 }
@@ -231,6 +244,10 @@ function hit_btn() {
 
 
 function new_round() {
+    // habilitar botoes bet
+    $('[name=chip-value]').removeAttr('disabled');
+    // pega outra carta do deck
+    card_master = req_api(url + "/hit/dealer-side");
     //verificar se tem dinheiro na wallet
     check_wallet();
     // limpar as mãos
@@ -270,7 +287,7 @@ function hit_api(player) {
 }
 
 function sum_cards() {
-    console.log("sum cards");
+    // console.log("sum cards");
 
     hand.each((k, el) => {
         var player = $(el).closest(".side").attr("id");
@@ -285,7 +302,7 @@ function sum_cards() {
 }
 function req_api(link) {
     var res = "Não carregou o Ajax";
-    console.log("AJAX");
+    // console.log("AJAX");
     $.ajax({
         url: link,
         method: 'GET',
@@ -317,7 +334,7 @@ function cardHtml(card) {
 
 function btn_reload(){
     $("#reload").click(() => {
-        console.log("meu ovo");
         res = req_api(url + "/reload/deck");
     })
 }
+

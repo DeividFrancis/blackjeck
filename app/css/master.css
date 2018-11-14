@@ -42,6 +42,7 @@ body{
   flex-direction: column;
   align-self: center;
   border:3px double white;
+  z-index: 20;
 }
 
 .table .bet-modal h3{
@@ -135,6 +136,7 @@ button:hover{
   position: absolute;
   top: 0;
   color: #fff;
+  z-index: 20;
 }
 
 .table .action-list button{
@@ -203,12 +205,13 @@ button:hover{
 .overlay{
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 10;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
 }
 
 .alert{
   position: absolute;
-  width: 100vw;
-  height: 100vh;
 }
 
 .alert button{
