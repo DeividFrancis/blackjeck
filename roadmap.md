@@ -11,4 +11,4 @@
     - mostrar carta do dealer ao perder OK
     - alterar notas por fichas 
     - mudar os estilos do botões
-    - descontar da wallet durante a aposta 
+    - descontar da wallet durante a aposta OK 
