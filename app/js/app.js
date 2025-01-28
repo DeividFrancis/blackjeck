@@ -12,10 +12,10 @@ var card_master = req_api(url + "/hit/dealer-side");
 
 // Condições do jogo
 var BLACKJACK = 21;
-var DERROTA  = 0;
+var DERROTA = 0;
 var CONTINUE = 1;
-var VITORIA  = 2;
-var EMPATE   = 3;
+var VITORIA = 2;
+var EMPATE = 3;
 
 // Teste para guardar a carta 
 // retorna um objeto card talkei
@@ -34,7 +34,7 @@ $(document).ready(() => {
     // console.log(card_master);
 });
 
-function check_wallet(){
+function check_wallet() {
     var res = req_api(url + "/wallet");
     if (res.wallet == 0) {
         location.reload();
@@ -51,15 +51,15 @@ function btn_stand() {
 }
 
 function stand() {
-    
+
     // remover fake card e hit card antes do loop
-    
+
     hit_local();
     hit = true;
-    while(hit){
-        if ((dealer_pts.text()) < 17){
+    while (hit) {
+        if ((dealer_pts.text()) < 17) {
             hit_api("dealer-side");
-        }else{
+        } else {
             hit = false;
         }
         verify_results(player_pts, dealer_pts);
@@ -76,7 +76,7 @@ function compare_sccore(pts_p, pts_d) {
     var msg;
     var res = 0;
     if ((21 - pts_p) < (21 - pts_d)) {
-        msg = "Ganhou"; 
+        msg = "Ganhou";
         res = VITORIA;
     } else if ((21 - pts_p) > (21 - pts_d)) {
         if (pts_d > 21) {
@@ -110,7 +110,7 @@ function verify_results(pts_p, pts_d) {
             show_round_result("blackjack");
             wallet_manager(res, bvt);
             hit_local2();
-            
+
         }
     }
 }
@@ -119,12 +119,12 @@ function blackjack(pts_p, pts_d) {
     var res = CONTINUE;
     if (pts_p == BLACKJACK && pts_d == BLACKJACK) {
         res = EMPATE;
-    }else if (pts_p == BLACKJACK) {
+    } else if (pts_p == BLACKJACK) {
         res = VITORIA;
     } else if (pts_d == BLACKJACK) {
         res = DERROTA;
     }
-    return res; 
+    return res;
 }
 
 function show_round_result(text) {
@@ -146,7 +146,7 @@ function bet_painel() {
         $(chip).click((el) => {
             var val = $(chip).find(".value").text();
             // animate_wallet(val);
-            coins_transaction(val ,"remoded");
+            coins_transaction(val, "remoded");
             res = req_api(url + "/wallet/" + (val * -1));
             $("#wallet").text(res.wallet);
             bet += parseInt(val);
@@ -154,7 +154,7 @@ function bet_painel() {
             response = check_wallet_bet(bet, bet_deal, text);
         });
     });
-    
+
     bet_reset.click(() => {
         res = req_api(url + "/wallet/" + bet);
         $("#wallet").text(res.wallet);
@@ -164,7 +164,7 @@ function bet_painel() {
         bet_value.text("0");
         bet = 0;
     });
-    
+
     bet_deal.click(() => {
         bet_value_total.text(bet * 2);
         deal("player-side");
@@ -188,12 +188,12 @@ function check_wallet_bet(bet_val, btn, text) {
     }
 }
 
-function dealer_deal(){
+function dealer_deal() {
     hit_api("dealer-side");
     card_fake();
 }
 
-function card_fake(){
+function card_fake() {
     var card = {
         value: 0,
         url: "red_back.png"
@@ -212,18 +212,18 @@ function wallet_manager(type, total_bet) {
     var res = { "wallet": 0 };
 
     if (type == VITORIA) {
-        coins_transaction(total_bet ,"added");
-        res = req_api(url + "/wallet/"+total_bet);
-    }else if (type == DERROTA){
-        res = req_api(url + "/wallet/"+0);
-    } else if(type == EMPATE){
-        res = req_api(url + "/wallet"+(total_bet/2));
+        coins_transaction(total_bet, "added");
+        res = req_api(url + "/wallet/" + total_bet);
+    } else if (type == DERROTA) {
+        res = req_api(url + "/wallet/" + 0);
+    } else if (type == EMPATE) {
+        res = req_api(url + "/wallet" + (total_bet / 2));
     }
     $("#wallet").text(res.wallet);
 }
 
 function deal(player) {
-    var data = req_api(url + "/deal/"+player);
+    var data = req_api(url + "/deal/" + player);
     data.forEach(card => {
         var c = cardHtml(card);
         $("#" + player + " .hand").append(c);
@@ -321,9 +321,9 @@ function req_api(link) {
 // Builder html
 function cardHtml(card) {
     var cardEl = $("<div>")
-    .addClass("card card_flip")
-    .attr("data-card-value", card.value)
-    .attr("data-card-honor", card.honor);
+        .addClass("card card_flip")
+        .attr("data-card-value", card.value)
+        .attr("data-card-honor", card.honor);
     var imgHtml = $("<img>").attr("src", "/img/cards/" + card.url);
     // console.log("---------------");
     // console.log(card);
@@ -332,7 +332,7 @@ function cardHtml(card) {
     return cardEl;
 }
 
-function btn_reload(){
+function btn_reload() {
     $("#reload").click(() => {
         res = req_api(url + "/reload/deck");
     })

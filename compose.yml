@@ -1,0 +1,26 @@
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: ./app
+    container_name: app
+    volumes:
+      - ./app:/usr/share/nginx/html
+    networks:
+      - app
+    ports:
+      - 3000:80
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: ./api
+    container_name: api
+    volumes:
+      - ./api:/api
+    networks:
+      - app
+    ports:
+      - "5000:5000"
+
+networks:
+  app:
