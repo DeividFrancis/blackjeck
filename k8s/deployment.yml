@@ -77,6 +77,7 @@ metadata:
   namespace: tbt
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
+    traefik.ingress.kubernetes.io/router.middlewares: "tbt-strip-api-prefix@kubernetescrd" # Aplica o middleware
 spec:
   rules:
     - host: blackjeck.pantufasuja.com.br
@@ -96,3 +97,13 @@ spec:
                 name: blackjeck-api
                 port:
                   number: 5000
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-api-prefix
+  namespace: tbt
+spec:
+  stripPrefix:
+    prefixes:
+      - "/api" # Remove o prefixo /api da URL antes de enviar para o serviço
