@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-    paths: 
+    paths:
       - api/**
   workflow_dispatch:
 
@@ -24,9 +24,9 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./api
           push: true
-          file: ./flask.dockerfile
+          file: ./api/Dockerfile
           tags: |
             deividoliver/blackjeck-api:latest
             deividoliver/blackjeck-api:v${{ github.run_number }}

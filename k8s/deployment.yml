@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blackjeck-app
+  namespace: tbt
+spec:
+  selector:
+    matchLabels:
+      name: blackjeck-app
+  template:
+    metadata:
+      labels:
+        name: blackjeck-app
+    spec:
+      containers:
+        - name: blackjeck-app
+          image: deividoliver/blackjeck-app:latest
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blackjeck-app
+  namespace: tbt
+spec:
+  selector:
+    name: blackjeck-app
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blackjeck-api
+  namespace: tbt
+spec:
+  selector:
+    matchLabels:
+      name: blackjeck-api
+  template:
+    metadata:
+      labels:
+        name: blackjeck-api
+    spec:
+      containers:
+        - name: blackjeck-api
+          image: deividoliver/blackjeck-api:latest
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blackjeck-api
+  namespace: tbt
+spec:
+  selector:
+    name: blackjeck-api
+  ports:
+    - port: 5000
+      targetPort: 5000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bleckjeck-ingress
+  namespace: tbt
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+    - host: blackjeck.pantufasuja.com.br
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: blackjeck-app
+                port:
+                  number: 80
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: blackjeck-api
+                port:
+                  number: 5000

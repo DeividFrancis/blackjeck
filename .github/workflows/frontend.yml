@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-    paths: 
+    paths:
       - app/**
       - .github/workflows/frontend.yml
   workflow_dispatch:
@@ -25,9 +25,9 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./app
           push: true
-          file: ./app.dockerfile
+          file: ./app/Dockerfile
           tags: |
             deividoliver/blackjeck-app:latest
             deividoliver/blackjeck-app:v${{ github.run_number }}

@@ -6,7 +6,7 @@ var bet_value_total = $("#bet-painel").find(".value");
 var dealer_pts = $("#dealer-side").find(".score").find("span");
 var player_pts = $("#player-side").find(".score").find("span");
 var bet = 0;
-var api = "localhost:5000";
+var api = "blackjeck.pantufasuja.com.br/api";
 var url = "//" + api;
 var card_master = req_api(url + "/hit/dealer-side");
 
